@@ -30,6 +30,10 @@ dependencies {
 	//logging
 	implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
 
+	//csv
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	implementation ("org.apache.commons:commons-csv:1.5")
+
 }
 
 tasks.withType<KotlinCompile> {

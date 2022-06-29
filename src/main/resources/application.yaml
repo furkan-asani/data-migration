@@ -4,3 +4,9 @@ spring:
     url: jdbc:postgresql://localhost:5438/CaseStudy
     username: postgres
     password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
