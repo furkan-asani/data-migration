@@ -8,15 +8,13 @@ import com.casestudy.datamigration.entity.user.UserEntityHelper
 import com.casestudy.datamigration.repository.RoleRepository
 import com.casestudy.datamigration.repository.UserRepository
 import mu.KLogging
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
-import kotlin.math.log
 
 @Service
-class ImportService(val roleRepository: RoleRepository,val userRepository: UserRepository, val userEntityHelper: UserEntityHelper, val roleEntityHelper: RoleEntityHelper) {
+class ImportService(roleRepository: RoleRepository, userRepository: UserRepository, userEntityHelper: UserEntityHelper, roleEntityHelper: RoleEntityHelper) {
 
     lateinit var csvNamesToRepository: Map<String, CrudRepository<EntitySuperClass, Int>>
     lateinit var csvNamesToEntityHelper: Map<String, EntityInterface>
@@ -29,6 +27,7 @@ class ImportService(val roleRepository: RoleRepository,val userRepository: UserR
     companion object: KLogging()
 
     fun importArrayOfFilesToDatabase(files: List<MultipartFile>) {
+
         files.filter{file -> CSVUtil.isCSV(file)}.forEach{
             file -> importDataToDatabase(file)
         }
@@ -39,21 +38,23 @@ class ImportService(val roleRepository: RoleRepository,val userRepository: UserR
 
         try {
 
-            if (csvNamesToEntityHelper[file.originalFilename] == null || csvNamesToRepository[file.originalFilename] == null){
-                logger.info { "this is the value of the value of entityhelper at runtime : ${csvNamesToEntityHelper[file.originalFilename]}"}
+            if (fileIsNotSupported(file)){
+
                 throw RuntimeException("This file/table is not yet support by the import service!")
+
             }else{
+
                 logger.info { "Initializing the entityHelper according to the uploaded file" }
 
                 val entityHelper = csvNamesToEntityHelper[file.originalFilename]
 
-                logger.info { "This is the initialized entityHelper: ${entityHelper}" }
+                logger.info { "This is the initialized entityHelper: $entityHelper" }
 
                 val repository: CrudRepository<EntitySuperClass, Int> = csvNamesToRepository[file.originalFilename]!!
 
-                logger.info { "This is the initialized repository: ${repository}" }
+                logger.info { "This is the initialized repository: $repository" }
 
-                val entities: List<EntitySuperClass> = CSVUtil.csvToUser(file.inputStream, entityHelper!!)
+                val entities: List<EntitySuperClass> = CSVUtil.csvToEntity(file.inputStream, entityHelper!!)
 
                 logger.info { "Amount of rows in csv: ${entities.size}" }
 
@@ -67,8 +68,8 @@ class ImportService(val roleRepository: RoleRepository,val userRepository: UserR
         }
     }
 
-    fun getAllUsers(): MutableIterable<EntitySuperClass> {
-        return userRepository.findAll()
+    fun fileIsNotSupported(file: MultipartFile): Boolean {
+        return csvNamesToEntityHelper[file.originalFilename] == null || csvNamesToRepository[file.originalFilename] == null
     }
 
 }
