@@ -22,9 +22,9 @@ class ImportController {
 
     @PostMapping("/import")
     fun importDataToDatabase(@RequestParam("file") files : List<MultipartFile>): ResponseEntity<String> {
-        var message: String = ""
+        var message: String
 
-            try {
+        try {
 
                 importService.importArrayOfFilesToDatabase(files)
 

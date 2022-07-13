@@ -64,6 +64,7 @@ class ImportService(roleRepository: RoleRepository, userRepository: UserReposito
 
             }
         } catch (e: IOException){
+
             throw RuntimeException("failed to store csv data: ${e.message}")
         }
     }
