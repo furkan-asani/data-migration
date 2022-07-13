@@ -16,28 +16,27 @@ class CSVUtil {
 
     companion object {
 
-        val logger = KLogging()
+        private val logger = KLogging()
 
-        val type : String = "text/csv"
-        val userHeaders: Array<String> = arrayOf<String>("user_id", "mail")
-
+        private const val type : String = "text/csv"
 
         fun isCSV(file: MultipartFile): Boolean{
             return type == file.contentType
         }
-        fun csvToUser(inputStream: InputStream, entityHelper: EntityInterface): MutableList<EntitySuperClass> {
+
+        fun csvToEntity(inputStream: InputStream, entityHelper: EntityInterface): MutableList<EntitySuperClass> {
 
             try {
 
-                val fileReader: BufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+                val fileReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
 
                 logger.logger.info { "File has been read" }
 
-                val csvParser: CSVParser = CSVParser(fileReader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())
+                val csvParser = CSVParser(fileReader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())
 
                 logger.logger.info { "File has been parsed" }
 
-                val entities: MutableList<EntitySuperClass> = mutableListOf<EntitySuperClass>()
+                val entities: MutableList<EntitySuperClass> = mutableListOf()
 
                 logger.logger.info { "Mutable list has been created" }
 
@@ -47,9 +46,9 @@ class CSVUtil {
 
                     logger.logger.info { "File is being iterated" }
 
-                    val user: EntitySuperClass = entityHelper.createEntity(csvRecord)
+                    val entity: EntitySuperClass = entityHelper.createEntity(csvRecord)
 
-                entities.add(user)
+                entities.add(entity)
 
                 }
 
