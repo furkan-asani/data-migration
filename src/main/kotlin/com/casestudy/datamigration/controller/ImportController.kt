@@ -1,6 +1,5 @@
 package com.casestudy.datamigration.controller
 
-import com.casestudy.datamigration.csvutil.CSVUtil
 import com.casestudy.datamigration.service.ImportService
 import mu.KLogging
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,18 +25,21 @@ class ImportController {
         var message: String = ""
 
             try {
-                //logger.info { "This is the name of the file : ${files.originalFilename} "}
+
                 importService.importArrayOfFilesToDatabase(files)
-                //message = "Uploaded the file successfully: ${files.originalFilename}"
+
+                message = "Uploaded ${files.count()}  file/s successfully: "
+
                 return ResponseEntity.status(HttpStatus.OK).body(message)
+
             }catch (e: Exception){
+
                 logger.info { e.message }
-                //message = "Could not upload the file: ${files.originalFilename} !"
+
+                message = "Could not upload one of the files: !"
+
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message)
             }
-
-        message = "Please upload a csv file"
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message)
     }
 
 }

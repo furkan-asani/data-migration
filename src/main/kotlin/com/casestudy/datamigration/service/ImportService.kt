@@ -54,7 +54,7 @@ class ImportService(roleRepository: RoleRepository, userRepository: UserReposito
 
                 logger.info { "This is the initialized repository: $repository" }
 
-                val entities: List<EntitySuperClass> = CSVUtil.csvToEntity(file.inputStream, entityHelper!!)
+                val entities: List<EntitySuperClass> = CSVUtil.csvToEntities(file.inputStream, entityHelper!!)
 
                 logger.info { "Amount of rows in csv: ${entities.size}" }
 

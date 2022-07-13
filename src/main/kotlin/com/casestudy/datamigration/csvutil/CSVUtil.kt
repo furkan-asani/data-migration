@@ -24,7 +24,7 @@ class CSVUtil {
             return type == file.contentType
         }
 
-        fun csvToEntity(inputStream: InputStream, entityHelper: EntityInterface): MutableList<EntitySuperClass> {
+        fun csvToEntities(inputStream: InputStream, entityHelper: EntityInterface): MutableList<EntitySuperClass> {
 
             try {
 
