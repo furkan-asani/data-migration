@@ -1,5 +1,6 @@
-package com.casestudy.datamigration.entity
+package com.casestudy.datamigration.entity.user
 
+import com.casestudy.datamigration.entity.EntitySuperClass
 import javax.persistence.*
 
 

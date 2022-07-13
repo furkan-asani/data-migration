@@ -2,8 +2,6 @@ package com.casestudy.datamigration.csvutil
 
 import com.casestudy.datamigration.entity.EntityInterface
 import com.casestudy.datamigration.entity.EntitySuperClass
-import com.casestudy.datamigration.entity.User
-import com.casestudy.datamigration.entity.user.UserEntityHelper
 import mu.KLogging
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser

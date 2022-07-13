@@ -1,7 +1,6 @@
 package com.casestudy.datamigration.entity.user
 
 import com.casestudy.datamigration.entity.EntityInterface
-import com.casestudy.datamigration.entity.User
 import org.apache.commons.csv.CSVRecord
 import org.springframework.stereotype.Service
 

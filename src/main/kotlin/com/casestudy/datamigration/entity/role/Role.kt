@@ -1,7 +1,7 @@
-package com.casestudy.datamigration.entity
+package com.casestudy.datamigration.entity.role
 
+import com.casestudy.datamigration.entity.EntitySuperClass
 import javax.persistence.Entity
-import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
