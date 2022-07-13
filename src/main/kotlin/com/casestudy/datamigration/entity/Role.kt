@@ -6,8 +6,6 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "Role")
-class Role(
-    @Id
-    val UserId: Int,
-    val Role: String
-)
+class Role(accountUserId: Int, val Role: String) : EntitySuperClass(accountUserId){
+
+}

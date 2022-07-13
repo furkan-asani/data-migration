@@ -1,5 +1,7 @@
 package com.casestudy.datamigration.csvutil
 
+import com.casestudy.datamigration.entity.EntityInterface
+import com.casestudy.datamigration.entity.EntitySuperClass
 import com.casestudy.datamigration.entity.User
 import com.casestudy.datamigration.entity.user.UserEntityHelper
 import mu.KLogging
@@ -20,26 +22,26 @@ class CSVUtil {
 
         val type : String = "text/csv"
         val userHeaders: Array<String> = arrayOf<String>("user_id", "mail")
-        val roleHeaders: Array<String> = arrayOf<String>("user_id", "role")
+
 
         fun isCSV(file: MultipartFile): Boolean{
             return type == file.contentType
         }
-        fun csvToUser(inputStream: InputStream): MutableList<User> {
+        fun csvToUser(inputStream: InputStream, entityHelper: EntityInterface): MutableList<EntitySuperClass> {
 
             try {
 
                 val fileReader: BufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
 
-                logger.logger.debug { "File has been read" }
+                logger.logger.info { "File has been read" }
 
                 val csvParser: CSVParser = CSVParser(fileReader, CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim())
 
-                logger.logger.debug { "File has been parsed" }
+                logger.logger.info { "File has been parsed" }
 
-                val users: MutableList<User> = mutableListOf<User>()
+                val entities: MutableList<EntitySuperClass> = mutableListOf<EntitySuperClass>()
 
-                logger.logger.debug { "Mutable list has been created" }
+                logger.logger.info { "Mutable list has been created" }
 
                 val csvRecords: Iterable<CSVRecord> = csvParser.records
 
@@ -47,19 +49,13 @@ class CSVUtil {
 
                     logger.logger.info { "File is being iterated" }
 
-                    val entityHelper = UserEntityHelper
+                    val user: EntitySuperClass = entityHelper.createEntity(csvRecord)
 
-                    val user: User = entityHelper.createEntity(csvRecord)
-
-                    logger.logger.info { "User has been created with the following properties: ${user.UserId} & ${user.Email}" }
-
-                users.add(user)
-
-                logger.logger.info { "User has been added to the list" }
+                entities.add(user)
 
                 }
 
-                return users
+                return entities
 
             }catch (e: IOException) {
 

@@ -5,6 +5,5 @@ import javax.persistence.*
 
 @Entity
 @Table(name="UserAccount")
-class User(@Id val UserId: Int,val Email: String) : EntitySuperClass(){
-
+class User( userAccountId: Int, val Email: String) : EntitySuperClass(userAccountId){
 }

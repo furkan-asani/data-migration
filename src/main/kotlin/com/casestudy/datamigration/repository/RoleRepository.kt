@@ -1,7 +1,7 @@
 package com.casestudy.datamigration.repository
 
-import com.casestudy.datamigration.entity.Role
+import com.casestudy.datamigration.entity.EntitySuperClass
 import org.springframework.data.repository.CrudRepository
 
-interface RoleRepository: CrudRepository<Role, Int> {
+interface RoleRepository: CrudRepository<EntitySuperClass, Int> {
 }
